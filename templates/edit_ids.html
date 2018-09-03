@@ -55,10 +55,6 @@ th {
 				<th>Number</th>
 				<th>Installation Date</th>
 				<th>Freq</th>
-				<!-- <th>AW (km)</th>
-				<th>SM (km)</th>
-				<th>WRF (km)</th>
-				<th>IMD (km)</th> -->
 				<th>Active</th>
 				<th></th>
 			</tr>
@@ -116,26 +112,6 @@ th {
 								<option {% if doc['freq'] == "5" %} selected {% endif %}>5</option>
 								<option {% if doc['freq'] == "10" %} selected {% endif %}>10</option>
 							</select></td>
-							<!-- <td data-container="body" data-toggle="tooltip" data-placement="top" style="text-align: center;" title="{% for a in doc['aw'] %}{{ a[1] }}{% endfor %}">
-								{% for a in doc['aw'] %}
-									{{ a[0] }}
-								{% endfor %}
-							</td>
-							<td data-container="body" data-toggle="tooltip" data-placement="top" style="position: ; text-align: center;" title="{% for s in doc['sm'] %}{{ s[1] }}{% endfor %}">
-								{% for s in doc['sm'] %}
-									{{ s[0] }}
-								{% endfor %}
-							</td>
-							<td data-container="body" data-toggle="tooltip" data-placement="top" style="position: ; text-align: center;" title="{% for w in doc['wrf'] %}{{ w[1] }}{% endfor %}">
-								{% for w in doc['wrf'] %}
-									{{ w[0] }}
-								{% endfor %}
-							</td>
-							<td data-container="body" data-toggle="tooltip" data-placement="top" style="position: ; text-align: center;" title="{% for i in doc['imd'] %}{{ i[1] }}{% endfor %}">
-								{% for i in doc['imd'] %}
-									{{ i[0] }}
-								{% endfor %}
-							</td> -->
 							<td><input type="checkbox" class="form-control" name="active" value="1" {% if doc['active'] == 1 %} checked {% endif %}></td>
 							<td><input type="submit" name="btn" class="btn btn-default"></td>
 						</form>
