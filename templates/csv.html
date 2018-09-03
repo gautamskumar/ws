@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Downloading...</title>
+
+
+    <link rel='shortcut icon' href='../../static/img/yobi.ico' type='image/x-icon'/ >
+    <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css">
+
+    <!-- <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap-theme.min.css">
+
+    <link rel="stylesheet" type="text/css" href="../static/css/results.css">
+
+</head>
+
+<body>
+{% for obj in sensors %}
+    {% if obj %}
+        <p class="data" style="display:none;">{"id":"{{ obj['id'] }}","ts":"{{ obj['ts'] }}","t1":"{{ obj['t1'] }}","t2":"{{ obj['t2'] }}","h":"{{ obj['h'] }}","r":"{{ obj['r'] }}","w":"{{ obj['w'] }}","s":"{{ obj['s'] }}","p":"{{ obj['p'] }}","sg":"{{ obj['sg'] }}"}</p>
+    {% endif %}
+{% endfor %}
+
+<script src='../static/js/download.js'></script>
+
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>SMS Manager</title>
+	<link rel='shortcut icon' href='../static/img/yobi.ico' type='image/x-icon'/ >
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+</head>
+<body style="text-align:center;">
+<style type="text/css">
+.button {
+	margin-top: 20px;
+	background-color: #80b3ff;
+	padding-top: .75em;
+	padding-bottom: .75em;
+	padding-right: 5px;
+	padding-left: 5px;
+	width: 100px;
+	margin-left: auto;
+	margin-right: auto;
+
+	-webkit-transition: background-color .1s linear;
+    -moz-transition: background-color .1s linear;
+    -o-transition: background-color .1s linear;
+    -ms-transition: background-color .1s linear;
+    transition: background-color .1s linear;
+}
+.button:hover {
+	background-color: #66a3ff;
+}
+
+</style>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <ul class="nav navbar-nav">
+	      <li><a href="/dashboard">Dashboard</a></li>
+	      <li><a href="/id-dash">Network Settings</a></li>
+	      <li class="active"><a href="/sms-manager">SMS Manager</a></li>
+	      <li><a href="/logout">Logout</a></li>
+	    </ul>
+	  </div>
+	</nav>
+	<div style="margin:auto;">
+		{% for i in range(sensors|length) %}
+		<table class="table table-striped" style="margin: 30px; width: 350px; float:left;" frame="box">
+			<tr>
+				<th>Station Name</th>
+				<td style="font-family:'HelveticaNeue-Medium', 'Helvetica';">{{ sensors[i]['name'] }}</td>
+			</tr>
+			<tr>
+				<th>SMS Language</th>
+				<td>{% if contacts[i]['language'] == "Hindi" %} हिंदी  {% else %} English {% endif %}</td>
+			</tr>
+			<tr>
+				<th>SMS Inputs</th>
+				<td id="inputs">{% if contacts[i]['inputs']['temp'] == 1 %} Temp{% endif %}{% if contacts[i]['inputs']['rain'] == 1 %}, Rain{% endif %}{% if contacts[i]['inputs']['hum']  == 1 %}, Hum{% endif %}
+				</td>
+			</tr>
+			<tr>
+				<th>SMS Inputs</th>
+				<td id="inputs">{% if contacts[i]['days']['yest'] == 1 %} Yest.{% endif %}{% if contacts[i]['days']['tod'] == 1 %} Today{% endif %}{% if contacts[i]['days']['tom']  == 1 %}, Tom.{% endif %}
+				</td>
+			</tr>
+			<tr>
+				<th>No. on DND</th>
+				<td>{{ contacts[i]["inDND"]|length or '0' }}</td>
+			</tr>
+			<tr>
+				<th>No. of subscribers</th>
+				<td>{{ contacts[i]["numbers"]|length or 'None' }}</td>
+			</tr>
+			<tr>
+				<th>Total Messages Delivered</th>
+				<td>{{ totals[i] or '0' }}</td>
+			</tr>
+			<tr>
+				<th>Credits</th>
+				<td>&#8377;{{ '%0.2f' % (contacts[i]["credits"]/2) or '0' }}</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<a href="sms-builder/{{ sensors[i]['id'] }}"><button class="button" style="color: #fff; font-family: 'HelveticaNeue-Light', 'Helvetica';">EDIT</button></a>
+				</td>
+			</tr>
+		</table>
+		{% endfor %}
+	</div>
+</body>
+
+<script type="text/javascript">
+
+// $(document).ready(function(){
+//     var $inputs = $('#inputs input[type="checkbox"]');
+  	
+//     $inputs.change(function(){
+//         var countCheckedCheckboxes = $inputs.filter(':checked').length;
+//         $('#cost').val('₹'.Math.concat(countCheckedCheckboxes));
+//     });
+// });
+</script>
+
+</html>

@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Sensor Dashboard</title>
+	<link rel='shortcut icon' href='../static/img/yobi.ico' type='image/x-icon'/ >
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+</head>
+
+<body style="text-align:center">
+<style type="text/css">
+
+.form-control {
+	font-size: 12px;
+}
+
+th {
+	font-size: 12px;
+}
+
+</style>
+<!-- 	<a href="/ids_csv">
+		<div class="button">
+			<p>Download</p>
+		</div>
+	</a> -->
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <ul class="nav navbar-nav">
+	      <li><a href="/dashboard">Dashboard</a></li>
+	      <li class="active"><a href="/id-dash">Network Settings</a></li>
+	      <li><a href="sms-manager">SMS Manager</a></li>
+	      <li><a href="/logout">Logout</a></li>
+	    </ul>
+	  </div>
+	</nav>
+	<div>
+		<table style="width:95%; margin:auto" class="table table-striped">
+			<tr>
+				<th>Sensor ID</th>
+				<th>Name</th>
+				<th>State</th>
+				<th>Latitude</th>
+				<th>Longitude</th>
+				<th>Carrier</th>
+				<th>Number</th>
+				<th>Installation Date</th>
+				<th>Freq</th>
+				<!-- <th>AW (km)</th>
+				<th>SM (km)</th>
+				<th>WRF (km)</th>
+				<th>IMD (km)</th> -->
+				<th>Active</th>
+				<th></th>
+			</tr>
+			{% if admin == 1 %}
+				<tr>
+					<form action="" method="post" id="add">
+						<td><input class="form-control" type="text" name="id"
+						placeholder="e.g. 104"></td>
+						<td><input class="form-control" type="text" name="name" placeholder="e.g. Navi Mumbai"></td>
+						<td><input class="form-control" name="state" placeholder="e.g. Bihar"></td>
+						<td><input class="form-control" type="text" name="lt" placeholder="e.g. 28.44466"></td>
+						<td><input class="form-control" type="" name="ln" placeholder="e.g. 77.10762"></td>
+						<td><input class="form-control" type="" name="carrier" placeholder="e.g. Vodafone"></td>
+						<td><input class="form-control" type="" name="ph" placeholder="e.g. +919654315872"></td>
+						<td><input class="form-control" type="datetime-local" name="date"></td>
+						<td width="50px"><select class="form-control" type="" name="freq">
+							<option>1</option>
+							<option>4</option>
+							<option>5</option>
+							<option>10</option>
+						</select></td>
+						<td></td>
+						<td><input type="submit" name="btn" value="Add" class="btn btn-default"></td>
+					</form>
+				</tr>
+				<br>
+			{% endif %}
+
+			{% for doc in idDicts %}
+				{% if doc %}
+					<tr>
+						<form action="" method="post">
+							<td><input class="form-control" type="text" name="id"
+							value={{ doc['id'] }} readonly></td>
+							<td><input class="form-control" type="text" name="name" value="{{ doc['name'] }}"></td>
+							<td><input class="form-control" name="state" value="{{ doc['state'] }}"></td>
+							<td><input class="form-control" type="text" name="lt" value="{{ doc['lt'] }}"></td>
+							<td><input class="form-control" type="" name="ln" value="{{ doc['ln'] }}"></td>
+							<td><select class="form-control" type="" name="carrier">
+								<option {% if not doc['carrier'] %} selected disabled {% endif %}></option>
+								<option {% if doc['carrier'] == "Airtel" %} selected {% endif %}>Airtel</option>
+								<option {% if doc['carrier'] == "Aircel" %} selected {% endif %}>Aircel</option>
+								<option {% if doc['carrier'] == "BSNL" %} selected {% endif %}>BSNL</option>
+								<option {% if doc['carrier'] == "Idea" %} selected {% endif %}>Idea</option>
+								<option {% if doc['carrier'] == "Reliance" %} selected {% endif %}>Reliance</option>
+								<option {% if doc['carrier'] == "Tata Docomo" %} selected {% endif %}>Tata Docomo</option>
+								<option {% if doc['carrier'] == "Vodafone" %} selected {% endif %}>Vodafone</option>
+							</select></td>
+							<td><input class="form-control" type="" name="ph" value="{{ doc['ph'] }}"></td>
+							<td><input class="form-control" type="datetime-local" name="date" value="{{ doc['date'] }}"></td>
+							<td><select class="form-control" type="" name="freq">
+								<option {% if not doc['freq'] %} selected disabled {% endif %}></option>
+								<option {% if doc['freq'] == "1" %} selected {% endif %}>1</option>
+								<option {% if doc['freq'] == "4" %} selected {% endif %}>4</option>
+								<option {% if doc['freq'] == "5" %} selected {% endif %}>5</option>
+								<option {% if doc['freq'] == "10" %} selected {% endif %}>10</option>
+							</select></td>
+							<!-- <td data-container="body" data-toggle="tooltip" data-placement="top" style="text-align: center;" title="{% for a in doc['aw'] %}{{ a[1] }}{% endfor %}">
+								{% for a in doc['aw'] %}
+									{{ a[0] }}
+								{% endfor %}
+							</td>
+							<td data-container="body" data-toggle="tooltip" data-placement="top" style="position: ; text-align: center;" title="{% for s in doc['sm'] %}{{ s[1] }}{% endfor %}">
+								{% for s in doc['sm'] %}
+									{{ s[0] }}
+								{% endfor %}
+							</td>
+							<td data-container="body" data-toggle="tooltip" data-placement="top" style="position: ; text-align: center;" title="{% for w in doc['wrf'] %}{{ w[1] }}{% endfor %}">
+								{% for w in doc['wrf'] %}
+									{{ w[0] }}
+								{% endfor %}
+							</td>
+							<td data-container="body" data-toggle="tooltip" data-placement="top" style="position: ; text-align: center;" title="{% for i in doc['imd'] %}{{ i[1] }}{% endfor %}">
+								{% for i in doc['imd'] %}
+									{{ i[0] }}
+								{% endfor %}
+							</td> -->
+							<td><input type="checkbox" class="form-control" name="active" value="1" {% if doc['active'] == 1 %} checked {% endif %}></td>
+							<td><input type="submit" name="btn" class="btn btn-default"></td>
+						</form>
+					</tr>
+				{% endif %}
+			{% endfor %}
+		</table>
+	</div>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>
+
+</body>
+
+</html>

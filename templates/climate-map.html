@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Latest compiled and minified CSS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<link rel='shortcut icon' href='static/img/yobi.ico' type='image/x-icon'/>
+	<script src="static/js/jquery.min.js"></script>
+	<script>
+		var hrs = 0;
+	</script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" type="text/css" href="../static/css/dashboard.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/grid.css">
+	<link href="static/css/app.css" rel="stylesheet">
+
+	<title>Dashboard</title>
+</head>
+<body>
+
+    <div id="map" class="grid_12 omega"></div>
+    <script type="text/javascript">
+    villages = []
+        {% for i in range(idsObjs|length) %}
+            villages.push({"id":"{{ idsObjs[i]['id'] }}","lt":{{ idsObjs[i]['lt']}},"ln":{{ idsObjs[i]['ln'] }},
+          "avg":{{ idsObjs[i]['avg'] }},"max":{{ idsObjs[i]['max'] }},"min":{{ idsObjs[i]['min'] }}})
+        {% endfor %}
+        console.log(villages);
+    </script>
+    <script src='static/js/climate-app.js'></script>
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key={{ api_key }}&callback=initMap">
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Wind Testing Dashboard</title>
+    <link rel='shortcut icon' href='../static/img/yobi.ico' type='image/x-icon'/ >
+    <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css">
+    <!-- <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/grid.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="../static/css/results.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+<style type="text/css">
+
+body {
+    background-color: #F0F0F0;
+}
+
+table {
+    float: left;
+}
+
+#header {
+    font-family:'HelveticaNeue-Light'; 
+    font-size: 18px; 
+}
+
+.square {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 98%;
+    margin: 1%;
+    background-color: #FFFFFF;
+    padding: 1.5%;
+}
+
+
+table{
+  border: .1em solid #EEEEEE;
+  margin: 1em auto;
+}
+
+th{
+  color: #000;
+  text-align:center;
+  padding:.5em .5em;
+  border-bottom:1px solid #D0D0D0;
+  background: #D0D0D0;
+  font-family: 'HelveticaNeue', Verdana, Arial, Sans-Serif;
+  font-size: 16px; 
+  font-weight: normal !important;
+}
+
+td{
+  padding: .5em .5em;
+  vertical-align:middle;
+  text-align: center;
+  border-bottom:1px solid #D0D0D0;
+  border-left:1px solid #D0D0D0;
+  font-family: 'HelveticaNeue', Verdana, Arial, Sans-Serif;
+  font-size: 16px; 
+}
+tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+table {
+  display: table;
+  border-collapse: separate;
+  border-spacing: 2px;
+  border-color: #FFFFFF;
+  margin-right: 50px;
+}
+
+tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+tr {
+  display: table-row;
+  vertical-align: inherit;
+  border-color: inherit;
+}
+
+#custom-container {
+  max-width: 100%;
+}
+
+button {
+  background-color: #F0F0F0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
+  width: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  color: black;
+  -webkit-transition: background-color .1s linear;
+    -moz-transition: background-color .1s linear;
+    -o-transition: background-color .1s linear;
+    -ms-transition: background-color .1s linear;
+    transition: background-color .1s linear;
+}
+button:hover {
+  background-color: #D0D0D0;
+}
+
+.temp {
+  background-color: #F0F0F0;
+}
+
+</style>
+
+<script type="text/javascript">
+function tempColorChange(id) {
+
+    red_min = {{ tStandard }};
+    
+    count = 0;
+    var td = document.getElementById(id);
+    console.log(td)
+    var err = parseFloat(td.innerHTML);
+    console.log(err);
+
+    if (err > red_min) {
+        td.style.background = '#ffb3b3';
+    }
+    else {
+        td.style.background = '#c1f0c1';
+    }
+}
+
+</script>
+
+<div class="grid_12 square">
+    <p id="header">wind test</p>
+    <form action="/wind-test-upload/{{ in_test }}">
+      <input type=submit value=Save class="button" style="color: #fff; font-family: 'HelveticaNeue-Light'; width: 100px; height: 35px; padding: .5em; font-size: 14px;">
+    </form>
+        <table>
+            <tr>
+                <th colspan="10"><a href="/results/2001">Wind tester</a></th>
+            </tr>
+            <tr>
+                <td class="ts">Datetime</td>
+                <td class="rps">Low RPS</td>
+                <td class="temp">Low MPS</td>
+                <td class="rps">Med RPS</td>
+                <td class="temp">Med MPS</td>
+                <td class="rps">High RPS</td>
+                <td class="temp">High MPS</td>
+                <td class="">Threshold (s)</td>
+                <td class="">Time (s)</td>
+                <td class="">Remove</td>
+            </tr>
+            {% for d in uploads %}
+                <tr>
+                    <td class="ts">  {{ d['ts'] }}</td>
+                    <td class="rps">{{ d['v']  }}</td>
+                    <td class="temp">{{ d['t1'] }}</td>
+                    <td class="rps">{{ d['bv']  }}</td>
+                    <td class="temp">{{ d['t2']  }}</td>
+                    <td class="rps">{{ d['s']  }}</td>
+                    <td class="temp">{{ d['h']  }}</td>
+                    <td class="">{{ d['threshold']  }}</td>
+                    <td class="">{{ d['diffs'] }}</td>
+                    <td><a href="wind-test-remove/{{ d['_id'] }}"><button>X</button></a></td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td >Wind Avg</td>
+                <td class="rps">{{ rpm1["avg"] }}</td>
+                <td class="temp">{{ low["avg"] }}</td>
+                <td class="rps">{{ rpm2["avg"] }}</td>
+                <td class="temp">{{ med["avg"] }}</td>
+                <td class="rps">{{ rpm3["avg"] }}</td>
+                <td class="temp">{{ high["avg"] }}</td>
+                <td>{{ threshold["avg"] }}</td>
+                <td id="time">{{ time["avg"] }}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Wind MOE (%)</td>
+                <td id="rpm1">{{ rpm1["moe"] }}</td>
+                <td id="low">{{ low["moe"] }}</td>
+                <td id="rpm2">{{ rpm2["moe"] }}</td>
+                <td id="med">{{ med["moe"] }}</td>
+                <td id="rpm3">{{ rpm3["moe"] }}</td>
+                <td id="high">{{ high["moe"] }}</td>
+                <td id="threshold">{{ threshold["moe"] }}</td>
+                <td id="time">{{ time["moe"] }}</td>
+                <td></td>
+                <script type="text/javascript">
+                    tempColorChange("low");
+                    tempColorChange("med");
+                    tempColorChange("high");
+                    tempColorChange("rpm1");
+                    tempColorChange("rpm2");
+                    tempColorChange("rpm3");
+                </script>
+            </tr>
+        </table>
+</div>
+
+<div class="grid_12 square">
+    <p id="header">which are testing?</p>
+    <form name="tests" action="/wind-test" method="post">
+        <input value="{{ in_test }}" name="testing" style="background-color: #FFFFFF">
+        <input type=submit value=Submit class="button" style="color: #fff; font-family: 'HelveticaNeue-Light'; width: 100px; height: 35px; padding: .5em; font-size: 14px;">
+    </form>
+</div>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>
+
+</body>
+
+
+</html>

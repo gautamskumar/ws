@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IMD Table</title>
+</head>
+<body>
+<style type="text/css">
+
+body {
+    background-color: #D0D0D0;
+}
+
+table {
+    margin: auto;
+}
+
+td {
+    font-family: 'HelveticaNeue-Light';
+    padding: .75em;
+    border-left: none;
+    border-bottom: none;
+}
+
+th {
+    font-family: 'HelveticaNeue-Light';
+    padding: .75em;
+    border-left: none;
+    border-bottom: none;
+}
+
+#top {
+    border-top: none;
+}
+
+#right {
+    border-right: none;
+}
+
+#corner {
+    border-top: none;
+    border-right: none;
+}
+
+button {
+    font-family: 'HelveticaNeue-Light';
+    background-color: #80b3ff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    font-size: 12px;
+    border: .5px solid #80b3ff;
+    float: center;
+    color: #ffffff;
+    -webkit-transition: background-color .1s linear;
+    -moz-transition: background-color .1s linear;
+    -o-transition: background-color .1s linear;
+    -ms-transition: background-color .1s linear;
+    transition: background-color .1s linear;
+}
+
+button:hover {
+    background-color: #66a3ff;
+    border: .5px solid #66a3ff;
+}
+.button.active {
+    background-color: #66a3ff;
+}
+
+h2 {
+    font-family: 'HelveticaNeue-Light';
+    float: center;
+    text-align: center;
+}
+
+</style>
+    <div class="grid_3">
+        <div name="selector" id="dash" class="grid_3" style="float: left">
+            <button onclick="printPage()">Print</button>
+        </div>
+    </div>
+    <div>
+        <h2>{{ name }}: {{ details }}</h2>
+    </div>
+    <table border="1">
+        <tr>
+            <th id="top" rowspan="2">Observed range (mm)</th>
+            <th id="corner" colspan="7">Forecast Range (mm)</th>
+        </tr>
+        <tr>
+            <th>0</th>
+            <th>1-10</th>
+            <th>11-25</th>
+            <th>26-50</th>
+            <th>51-100</th>
+            <th>>100</th>
+            <th id="right">Total</th>
+        </tr>
+        <tr>
+            <th>0</th>
+            <td>a: {{ comp['0']['vals'][0] }}</td>
+            <td>b: {{ comp['0']['vals'][1] }}</td>
+            <td>c: {{ comp['0']['vals'][2] }}</td>
+            <td>d: {{ comp['0']['vals'][3] }}</td>
+            <td>e: {{ comp['0']['vals'][4] }}</td>
+            <td>f: {{ comp['0']['vals'][5] }}</td>
+            <td id="right">A: {{ comp['0']['vals'][0] }}</td>
+        </tr>
+        <tr>
+            <th>1-10</th>
+            <td>g: {{ comp['1to10']['vals'][0] }}</td>
+            <td>h: {{ comp['1to10']['vals'][1] }}</td>
+            <td>i: {{ comp['1to10']['vals'][2] }}</td>
+            <td>j: {{ comp['1to10']['vals'][3] }}</td>
+            <td>k: {{ comp['1to10']['vals'][4] }}</td>
+            <td>l: {{ comp['1to10']['vals'][5] }}</td>
+            <td id="right">B: {{ comp['1to10']['vals'][0] }}</td>
+        </tr>
+        <tr>
+            <th>11-25</th>
+            <td>m: {{ comp['11to25']['vals'][0] }}</td>
+            <td>n: {{ comp['11to25']['vals'][1] }}</td>
+            <td>o: {{ comp['11to25']['vals'][2] }}</td>
+            <td>p: {{ comp['11to25']['vals'][3] }}</td>
+            <td>q: {{ comp['11to25']['vals'][4] }}</td>
+            <td>r: {{ comp['11to25']['vals'][5] }}</td>
+            <td id="right">C: {{ comp['11to25']['vals'][0] }}</td>
+        </tr>
+        <tr>
+            <th>26-50</th>
+            <td>s: {{ comp['26to50']['vals'][0] }}</td>
+            <td>t: {{ comp['26to50']['vals'][1] }}</td>
+            <td>u: {{ comp['26to50']['vals'][2] }}</td>
+            <td>v: {{ comp['26to50']['vals'][3] }}</td>
+            <td>w: {{ comp['26to50']['vals'][4] }}</td>
+            <td>x: {{ comp['26to50']['vals'][5] }}</td>
+            <td id="right">D: {{ comp['26to50']['vals'][0] }}</td>
+        </tr>
+        <tr>
+            <th>51-100</th>
+            <td>y: {{ comp['51to100']['vals'][0] }}</td>
+            <td>z: {{ comp['51to100']['vals'][1] }}</td>
+            <td>aa: {{ comp['51to100']['vals'][2] }}</td>
+            <td>ab: {{ comp['51to100']['vals'][3] }}</td>
+            <td>ac: {{ comp['51to100']['vals'][4] }}</td>
+            <td>ad: {{ comp['51to100']['vals'][5] }}</td>
+            <td id="right">E: {{ comp['51to100']['vals'][0] }}</td>
+        </tr>
+        <tr>
+            <th>>100</th>
+            <td>ae: {{ comp['gt100']['vals'][0] }}</td>
+            <td>af: {{ comp['gt100']['vals'][1] }}</td>
+            <td>ag: {{ comp['gt100']['vals'][2] }}</td>
+            <td>ah: {{ comp['gt100']['vals'][3] }}</td>
+            <td>ai: {{ comp['gt100']['vals'][4] }}</td>
+            <td>aj: {{ comp['gt100']['vals'][5] }}</td>
+            <td id="right">F: {{ comp['gt100']['vals'][0] }}</td>
+        </tr>
+        <tr>
+            <th>Total</th>
+            <td>G</td>
+            <td>H</td>
+            <td>I</td>
+            <td>J</td>
+            <td>K</td>
+            <td>L</td>
+            <td id="right">T</td>
+        </tr>
+    </table>
+<script type="text/javascript">
+function printPage() {
+    window.print()
+}
+</script>
+</body>
+</html>

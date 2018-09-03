@@ -1,0 +1,291 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>SMS Builder</title>
+	<link rel='shortcut icon' href='../static/img/yobi.ico' type='image/x-icon'/ >
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<link href="../static/css/grid.css" rel="stylesheet">
+
+</head>
+<body style="text-align:center;">
+	<style type="text/css">
+		p { margin:0 }
+		.dropdown-menu ul {
+			list-style-type: none;
+		}
+	</style>
+		<script type="text/javascript">
+	//Temp: 14 char
+	//Hum: 13 char
+	//Rain: 11 char
+
+	//Today: 2 Char
+	//Yesterday 2 Char
+
+
+	$(document).ready(function(){
+	    var $formElem 		= $(".formElem");
+
+	    function calculateCost(){
+	    	var locationName 	= $(".locationName").val().length;
+	    	var total 			= 0;
+	    	var setting 		= "फसल कटाई";
+	    	var cost 			= locationName+1;
+	    	var dynCost 		= 0;
+	    	var language 		= $("#language option:selected").val();
+		    var tod    			= $('#tod').is(":checked");
+		    var tom 	   		= $('#tom').is(":checked");
+		    var daf 	   		= $('#daf').is(":checked");
+		    $('#location').text($(".locationName").val());
+		    $('#setting').text(setting).val();
+
+		    if (language == "Hindi") {
+		    	var Hindi   = true;
+		    	var setting = "फसल कटाई";
+		    	$('#setting').text(setting).val();
+		    }
+		    else {
+		    	var Hindi = false;
+		    	var setting = "HARVEST";
+		    	$('#setting').text(setting).val();
+		    }
+
+		    values = {
+			    "tod_day" : $('#tod #day'),
+			    "tod_val" : $('#tod #value'),
+			    "tom_day" : $('#tom #day'),
+			    "tom_val" : $('#tom #value'),
+			    "daf_day" : $('#daf #day'),
+			    "daf_val" : $('#daf #value'),
+		    }
+
+		    Object.keys(values).forEach(function(key) {
+		    	values[key].text("");
+			});
+		    if (tod) {
+		    	total += 1;
+		    	if (Hindi) {
+		    		var txt = "आज";
+			    	cost   += txt.length+1; // for Yesterday in SMS
+			    	values["tod_day"].text(txt);
+			    }
+			    else {
+			    	var txt = "TODAY";
+			    	cost   += txt.length+1; // for Yesterday in SMS
+			    	values["tod_day"].text(txt);
+			    }
+		    	if (Hindi) {
+		    		var txt = "बहुत सही";
+			    	cost   += txt.length+1; // for Yesterday in SMS
+			    	values["tod_val"].text(txt);
+			    }
+			    else {
+			    	var txt = "Very good";
+			    	cost   += txt.length+1; // for Yesterday in SMS
+			    	values["tod_val"].text(txt);
+			    }
+		    }
+
+		    if (tom) {
+		    	total += 1;
+		    	if (Hindi) {
+		    		var txt = "कल";
+			    	cost   += txt.length; // for Yesterday in SMS
+			    	values["tom_day"].text(txt);
+			    }
+			    else {
+			    	var txt = "TOMORROW";
+			    	cost   += txt.length; // for Yesterday in SMS
+			    	values["tom_day"].text(txt);
+			    }
+		    	if (Hindi) {
+		    		var txt = "खराब";
+			    	cost   += txt.length; // for Yesterday in SMS
+			    	values["tom_val"].text(txt);
+			    }
+			    else {
+			    	var txt = "Bad";
+			    	cost   += txt.length; // for Yesterday in SMS
+			    	values["tom_val"].text(txt);
+			    }
+		    }
+
+		    if (daf) {
+		    	total += 1;
+		    	if (Hindi) {
+		    		var txt = "परसों";
+			    	cost   += txt.length; // for Yesterday in SMS
+			    	values["daf_day"].text(txt);
+			    }
+			    else {
+			    	var txt = "DAY AFTER";
+			    	cost   += txt.length; // for Yesterday in SMS
+			    	values["daf_day"].text(txt);
+			    }
+		    	if (Hindi) {
+		    		var txt = "सही";
+			    	cost   += txt.length; // for Yesterday in SMS
+			    	values["daf_val"].text(txt);
+			    }
+			    else {
+			    	var txt = "Good";
+			    	cost   += txt.length; // for Yesterday in SMS
+			    	values["daf_val"].text(txt);
+			    }
+		    }
+
+		    if (language == "Hindi") {
+		    	dynCost = Math.ceil(cost/70)*.5;
+		    }
+		   	if (language == "English") {
+		   		dynCost = Math.ceil(cost/160)*.5;
+		   	}
+		    $('#cost').val('₹'.concat(dynCost.toFixed(2)));
+		    console.log(cost);
+	    }
+
+	    calculateCost();
+
+	    $formElem.change(function(){
+	        //var countCheckedCheckboxes = $inputs.filter(':checked').length;
+	        calculateCost();
+	    });
+	});
+	</script>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+		<ul class="nav navbar-nav">
+		  <li><a href="/dashboard">Dashboard</a></li>
+		  <li><a href="/id-dash">Network Settings</a></li>
+		  <li><a href="/sms-manager">SMS Manager</a></li>
+		  <li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">SMS Builder</a>
+			<div class="dropdown-menu">
+				<ul>
+					<li><a class="dropdown-item" href="/sms-builder/{{ sensors['id'] }}">Daily weather</a></li>
+					<li><a class="dropdown-item" href="/sms-sowing/{{ sensors['id'] }}">Sowing</a></li>
+					<li><a class="dropdown-item" href="/sms-irrigation/{{ sensors['id'] }}">Irrigation</a></li>
+					<li><a class="dropdown-item" href="/sms-inputs/{{ sensors['id'] }}">Inputs</a></li>
+					<li><a class="dropdown-item" href="/sms-harvest/{{ sensors['id'] }}">Harvest</a></li>
+				</ul>
+			</div>
+		  </li>
+		  <li><a href="/logout">Logout</a></li>
+		</ul>
+	  </div>
+	</nav>
+	<form method="post" action="/sms-harvest/{{ sensors['id'] }}" class="grid_6 alpha" style="display:in-line;">
+		<table style="width:375px; margin: 25px; display: inline" class="table table-striped">
+			<tr>
+				<th>Station Name</th>
+				<td><input name="name" class="form-control" value="{{ sensors['name'] }}" readonly></td>
+			</tr>
+			<tr style="display:none;">
+				<th>ID</th>
+				<td><input name="sensor_id" class="form-control" value="{{ sensors['id'] }}" readonly></td>
+			</tr>
+			<tr>
+				<th>SMS Language</th>
+				<td id="language">
+					<select class="formElem form-control" name="language">
+						<option selected></option>
+						<option value="Hindi" {% if harvest['language'] == "Hindi" %} selected {% endif %}>हिंदी</option>
+						<option value="English" {% if harvest['language'] == "English" %} selected {% endif %}>English</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>SMS Location Name</th>
+				<td><input class="formElem locationName form-control" name="username" value="{{ harvest['username'] or '' }}"></td>
+			</tr>
+			<tr>
+				<th>Days Inputs</th>
+				<td id="inputs">
+					<input id="tod" class="formElem" type="checkbox" name="tod" value="1" {% if harvest['days']['tod'] == 1 %} checked {% endif %}>Today
+					<input id="tom" class="formElem" type="checkbox" name="tom"  value="1" {% if harvest['days']['tom']  == 1 %} checked {% endif %}>Tomorrow
+					<input id="daf" class="formElem" type="checkbox" name="daf"  value="1" {% if harvest['days']['daf']  == 1 %} checked {% endif %}>Day After
+				</td>
+			</tr>
+			<tr>
+				<th>Start date</th>
+				<td><input class="formElem locationName form-control" name="start" type="date" value="{{ harvest['start'] or '' }}"></td>
+			</tr>
+			<tr>
+				<th>End date</th>
+				<td><input class="formElem locationName form-control" name="end" type="date" value="{{ harvest['end'] or '' }}"></td>
+			</tr>
+			<tr>
+				<th>Forecasted Variables</th>
+				<td><input class="formElem locationName form-control" name="username" value="rain, solar, humidity, temperature" readonly></td>
+			</tr>
+			<tr>
+				<th>Algorithm</th>
+				<td><textarea name="algo" class="form-control" rows="7" style="font-family: Courier; width='400px'">{{ harvest['algo'] or '' }}</textarea> </td>
+			</tr>
+			<tr>
+				<th>In DND</th>
+				<td style="float: left;">
+				{% for c in harvest["inDND"] %}
+					{{ c or 'None' }}
+				{% endfor %}
+				</td>
+			</tr>
+			<tr>
+				<th>Numbers</br>(One number</br>per line)</th>
+				<td><textarea name="numbers" class="form-control" rows="7">{% for c in harvest["numbers"] %}{{ c or ''}}
+{% endfor %}</textarea> </td>
+			</tr>
+			<tr>
+				<th>Sending Time</th>
+				<td><input class="form-control" name="time" type="time" value="09:15" readonly></td>
+			</tr>
+			<tr>
+				<th>Cost per message</th>
+				<td><input id="cost" name="cost" class="form-control" value="" readonly></td>
+			</tr>
+			<tr>
+				<th>Credits</th>
+				<td style="float: left;">&#8377;{{ '%0.2f' % (contacts["credits"]/2) or '0' }}</td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" name="btn" class="btn btn-default"></td>
+			</tr>
+		</table>
+	</form>			
+	<div style="text-align:left; background-color: #f0f0f0; padding-left: 20%; padding-top: 1%; height: 350px;" class="grid_6 omega">
+		<h3 style="margin-bottom: 2em;">SMS Visualizer</h2>
+		<div id="message">
+			<p id="location"></p>
+			<p id="setting"></p>
+			<br>
+			<div id="tod">
+				<p id="day"></p>
+				<p id="value"></p>
+			</div>
+			<br>
+			<div id="tom">
+				<p id="day"></p>
+				<p id="value"></p>
+			</div>
+			<br>
+			<div id="daf">
+				<p id="day"></p>
+				<p id="value"></p>
+			</div>
+		</div>
+	</div>
+	<div class="grid_6 omega">
+            <iframe width="100%" height="600" frameborder="0" scrolling="no" src="https://plot.ly/~bharat5005/2.embed"></iframe>
+        </div>
+</body>
+
+</html>

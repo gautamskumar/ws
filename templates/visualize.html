@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<style>
+		html {
+			background-color: black;
+		}
+		body {
+			margin: 1px;
+		}
+
+	   #map {
+		height: 600px;
+		width: 100%;
+		background-color: #999999;
+		float: left;
+	  }
+	  .info {
+	  	margin-left: 5%;
+	  	text-align: center;
+	  	margin-right: 5%;
+	  	border-radius: 5px;
+	  	background-color: #191919;
+	  	color: #E4E4E4;
+	  }
+	  .info.header {
+	  	background-color: black;
+	  	padding-top: 5px;
+	  	padding-bottom: 5px;
+	  	border-radius: 5px;
+	  	margin: auto;
+	  }
+	  .info.large {
+	  	font-size: xx-large;
+	  	margin-bottom: 0px;
+	  }
+	  .info.small {
+	  	font-size: small;
+	  	margin-top: 3px;
+	  }
+	  .info.footer {
+	  	background-color: black;
+	  	height: 12px;
+	  	margin:auto;
+	  }
+	</style>
+  </head>
+  <body>
+	<div id="map"></div>
+	{% for obj in jsonObjs %}
+        {% if obj %}
+            <p class="data" style="display: none;">{"lt":{{ obj['lt'] }},"ln":{{ obj['ln'] }},"name":"{{ obj['name'] }}","graph":"{{ obj['graph'] }}","lastprice":"{{obj['lastprice']}}",
+            "movingavg": "{{obj['movingavg']}}", "ts": "{{obj["ts"]}}", "avg": "{{obj["avg"]}}", "commodity":"Potato", "nationalavg": "{{obj['nationalavg']}}"}</p>
+        {% endif %}
+    {% endfor %}
+    
+    <div id="graph" style="width:0%;height:600px;float:right;background-color:#333333;color:white">
+    	<div style="background-color:#131212; margin:auto; width:90%;margin-bottom: 5%;">
+    		<h4 style="text-align:center; background-color:black; padding-top:5px; padding-bottom:5px; margin-bottom:-12%"> 
+    		Modal Price vs Time</h4>
+    		<iframe id="iframe" style="margin-left: 0%" width="100%" height="350" frameborder="0" scrolling="no" src="https://plot.ly/~bharat5005/2.embed"></iframe>
+    	</div>
+    	<!-- <p id="iframe" src="yolo">Test</p> -->
+    	<div class="info">
+    		<h4 class="info header" style="background-color:black">Metric - Supply Chains</h4>
+    		<p class="info large">892,201</p>
+    		<p class="info small">Count</p>
+    		<div class="info footer"></div>
+    	</div>
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+	<script>
+		var all_colors = ['red', 'orange', 'yellow', 'green'];
+		var all_circles = [];
+		var all_infos = []
+
+		// Split(['#graph', '#map'], {
+		//     sizes: [25, 75],
+		//     minSize: 100
+		// });
+
+		var shops = new Array();
+
+		var arr = document.getElementsByClassName('data');
+		
+		for(var i=0; i< arr.length; i++){
+ 			shops.push(JSON.parse(arr[i].innerHTML));
+		}
+
+		function circleColor(nationalavg) {
+			return all_colors[Math.floor(Math.random() * 4)];
+
+			if(nationalavg > 100) {
+				return 'green';
+			} else if(nationalavg > 90) {
+				return 'yellow';
+			} else if(nationalavg > 80) {
+				return 'orange';
+			} else if(nationalavg > 0) { 
+				return 'red';
+			} else {
+				return 'purple';
+			}
+
+		}
+
+		function circleSize(production) {
+			return 9000;
+
+			// if(production > 0) {
+			// 	return 60 * production;
+			// } else {
+			// 	return 6000;
+			// }
+	  	}
+
+	  	function getCenter(shops) {
+	  		var sum_lat = 0.;
+			var sum_lng = 0.;
+
+			for (var s in shops) {
+				shop = shops[s];
+				sum_lat += parseFloat(shop.lt);
+				sum_lng += parseFloat(shop.ln);
+			}
+
+			return {
+				'lat': sum_lat/shops.length, 
+				'lng': sum_lng/shops.length
+			}
+		}
+
+		var styles = [{"featureType":"all","elementType":"all","stylers":[{"invert_lightness":true},{"saturation":10},{"lightness":30},{"gamma":0.5},{"hue":"#435158"}]}]
+
+
+
+		function initMap() {
+
+			var mapDiv = document.getElementById('map');
+
+			var map_center = getCenter(shops);
+
+			var map = new google.maps.Map(mapDiv, {
+				center: map_center,
+				zoom: 7
+			});
+
+			map.setOptions({styles: styles});
+
+			for(var s in shops) {
+				var shop = shops[s];
+				var color = circleColor(22);
+
+				var shopInfo = new google.maps.InfoWindow({
+			      content: '<div id="content">'
+			      +'<h3>' + shop.name + '&nbsp<a>' 
+			      + '<img width="15px" padding-left="20px" src="../static/img/chart.jpg"></a></h3>'
+			      + '<i>Updated: '+shop.ts+'</i>'
+
+			      + '<br /><br />'
+			        + '<table>'
+			          + '<tr><td>Commodity</td><td>'+shop.commodity+'</td></tr>'
+			          +'<tr><td>Average Supply</td><td>'+shop.avg+' kgs</td></tr>'
+			          +'<tr><td>National Average</td><td>'+shop.nationalavg+' %</td></tr>'
+			          +'<tr><td>Moving Average</td><td>'+shop.movingavg+' kgs</td></tr>'
+			          +'<tr><td>Last Price</td><td>'+shop.lastprice+' Rs.</td></tr>'
+			        + '</table>'
+			      + '</div>'
+			    });
+
+			    all_infos.push(shopInfo);
+
+				var shopCircle = new google.maps.Circle({
+					//villageColor here
+					strokeColor: color,
+					strokeOpacity: 0.8,
+					strokeWeight: 0.5,
+					//villageColor here
+					fillColor: color,
+					// fillColor: circleColor(),
+					fillOpacity: 0.45,
+					map: map,
+					center: {'lat': parseFloat(shop.lt), 'lng': parseFloat(shop.ln)},
+					position: {'lat': parseFloat(shop.lt), 'lng': parseFloat(shop.ln)},
+					radius: circleSize(shop.movingavg),
+
+				});
+
+				all_circles.push(shopCircle);
+
+				google.maps.event.addListener(all_circles[s], 'click', function(innerKey) {
+					return function() {
+						for(var v in all_infos) {
+							if(v!=innerKey) {
+								all_infos[v].close();
+							}	
+						}
+						
+
+						console.log(shops[innerKey].graph);
+						$("#graph").css("width", "35%");
+						$('#map').css("width", "65%");
+						$('#iframe').attr("src", shops[innerKey].graph);
+						all_infos[innerKey].open(map, all_circles[innerKey]);
+					}
+				}(s));
+
+				google.maps.event.addListener(shopInfo,'closeclick',function(innerKey){
+					$("#graph").css("width", "0%");
+					$('#map').css("width", "100%");
+				});
+			}
+				
+		}
+	</script>
+	<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAI6Rl5MO_htYUgemf5MUdFHfULFlKc-0M&callback=initMap">
+	</script>
+  </body>
+</html>

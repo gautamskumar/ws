@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Edit Permissions</title>
+	<link rel='shortcut icon' href='../static/img/yobi.ico' type='image/x-icon'/ >
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+</head>
+
+<body style="text-align:center">
+<!-- 	<a href="/ids_csv">
+		<div class="button">
+			<p>Download</p>
+		</div>
+	</a> -->
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <ul class="nav navbar-nav">
+	      <li><a href="/dashboard">Dashboard</a></li>
+	      <li class="active"><a href="/id-dash">Admin Control</a></li>
+	      <li><a href="/id-dash">Network Settings</a></li>
+	      <li><a href="/sms-manager">SMS Manager</a></li>
+	      <li><a href="/logout">Logout</a></li>
+	    </ul>
+	  </div>
+	</nav>
+	<div>
+		<table style="width:95%; margin:auto" class="table table-striped">
+			<tr>
+				<th>Name</th>
+				<th>Temp</th>
+				<th>Hum</th>
+				<th>Wind</th>
+				<th>Rain</th>
+				<th>Power</th>
+				<th>Signal</th>
+				<th>Battery</th>
+				<th>Voltage</th>
+				<th>Current</th>
+				<th>Weather Alerts</th>
+				<th>Harvest Advisory</th>
+				<th>Update</th>
+			</tr>
+			<br>
+
+					<tr>
+						<form action="" method="post">
+							<td><input class="form-control" type="text" name="username" value="name"></td>
+							<td><input class="form-control" type="checkbox" name="temp" {% if True == True %} checked {% endif %}></td>
+							<td><input class="form-control" type="checkbox" name="hum" {% if True == True %} checked {% endif %}></td>
+							<td><input class="form-control" type="checkbox" name="wind" {% if True == True %} checked {% endif %}></td>
+							<td><input class="form-control" type="checkbox" name="rain" {% if True == True %} checked {% endif %}></td>
+							<td><input class="form-control" type="checkbox" name="power" {% if True == True %} checked {% endif %}></td>
+							<td><input class="form-control" type="checkbox" name="signal" {% if True == True %} checked {% endif %}></td>
+							<td><input class="form-control" type="checkbox" name="batt" {% if True == True %} checked {% endif %}></td>
+							<td><input class="form-control" type="checkbox" name="vol" {% if True == True %} checked {% endif %}></td>
+							<td><input class="form-control" type="checkbox" name="curr" {% if True == True %} checked {% endif %}></td>
+							<td><input class="form-control" type="checkbox" name="weather" {% if True == True %} checked {% endif %}></td>
+							<td><input class="form-control" type="checkbox" name="harvest" {% if True == True %} checked {% endif %}></td>
+							<td><input type="submit" name="btn" class="btn btn-default"></td>
+						</form>
+					</tr>
+		</table>
+	</div>
+</body>
+
+</html>

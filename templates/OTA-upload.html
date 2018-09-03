@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>OTA Upload</title>
+	<link rel='shortcut icon' href='../static/img/yobi.ico' type='image/x-icon'/ >
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+</head>
+<body style="text-align:center; padding: 1em;">
+	<div>
+		<form method="post" action="/OTA-upload">
+			<table style="width:90%; margin: auto" class="table table-striped">
+				<tr>
+					<th>Version</th>
+					<td><input name="version" class="form-control" placeholder="{{ code['version'] }}"></td>
+				</tr>
+				<tr>
+					<th>Updated at</th>
+					<td style="float: left;">{{ code["updated_at"] }}</td>
+				</tr>
+				<tr>
+					<th>Code</th>
+					<td><textarea name="code" class="form-control" rows="20">{{ code["code"] }}</textarea> </td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" name="btn" class="btn btn-default"></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+
+</html>

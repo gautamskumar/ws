@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>R2</title>
+    <link rel='shortcut icon' href='../../static/img/yobi.ico' type='image/x-icon'/ >
+    <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css">
+    <!-- <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/results.css">
+    <link rel='shortcut icon' href='../static/img/yobi.ico' type='image/x-icon'/ >
+
+</head>
+
+<body>
+
+<style type="text/css">
+
+.container {
+    padding: 0em;
+    margin: 0em;
+}
+
+table {
+    float: left;
+}
+
+td p {
+    font-size: 11px;
+}
+
+</style>
+
+<script type="text/javascript">
+function colorChange(id) {
+
+    orange_min = 1;
+    red_min = 2;
+    
+    count = 0;
+    var td = document.getElementById(id);;
+    var arr = document.getElementsByClassName('pct');
+    for(var i=0; i< arr.length; i++){
+        pct = parseFloat(arr[i].innerHTML);
+    }
+    if (pct < 80.0) {
+        td.style.background = '#ffb3b3';
+    }
+    else if (pct < 90.0) {
+        td.style.background = '#ffe0b3';
+    }
+    else {
+        td.style.background = '#c1f0c1';
+    }
+}
+</script>
+<table border='1'>
+    {% block analytics %}
+        <div class="grid_12" style="float: left;">
+        {% for a in analytics %}
+            {% if a %}
+                <table border='1' style="width: 14%">
+                    <tr>
+                        <th><a href="/r2/{{ a[0] }}">{{ a[0] }}</a></th>
+                    </tr>
+                    <tr id="{{ a[0] }}">
+                        <td class="pct">{{ a[1] }}%
+                            <p>{{ a[2] }} / {{ a[3] }} ({{ a[4] }})</p>
+                        </td>
+                    </tr>
+                    <script type="text/javascript">
+                        colorChange({{ a[0] }})
+                    </script>
+                </table>
+            {% endif %}
+        {% endfor %}
+        </div>
+
+    {% endblock %}
+</table>
+</body>
+
+</html>

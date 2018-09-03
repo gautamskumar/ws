@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Farmer Cash Flow Predictions</title>
+	<link rel='shortcut icon' href='../static/img/yobi.ico' type='image/x-icon'/>
+</head>
+<body>
+<style type="text/css">
+	body {
+		background-color: #f0f0f0;
+		color: #FFFFFF;
+		font-family: 'HelveticaNeue-Light';
+		text-align: center;
+	}
+	form {
+		margin: auto;
+		margin-top: 16.5%;
+	}
+	input, select {
+		font-size: 24px;
+		border: none;
+		background-color: #f0f0f0;
+		margin-bottom: 15px;
+		width: 225px;
+		font-family: 'HelveticaNeue-Light';
+		padding-top: 5px;
+		padding-bottom: 5px;
+		padding-left: 5px;
+		padding-right: 5px;
+		border-bottom: solid #DADADA 1px;
+	}
+	.button {
+		margin-top: 20px;
+		background-color: #80b3ff;
+		padding-top: 1.5em;
+		padding-bottom: 1.5em;
+		padding-right: 5px;
+		padding-left: 5px;
+		width: 350px;
+		margin-left: auto;
+		margin-right: auto;
+
+		-webkit-transition: background-color .1s linear;
+	    -moz-transition: background-color .1s linear;
+	    -o-transition: background-color .1s linear;
+	    -ms-transition: background-color .1s linear;
+	    transition: background-color .1s linear;
+	}
+	.button:hover {
+		background-color: #66a3ff;
+	}
+
+	a {
+		text-decoration: none;
+		color: #FFFFFF;
+		padding-left: 45%;
+		padding-right: 45%;
+		padding-top: 1.5em;
+		padding-bottom: 1.5em;
+	}
+
+	.logo {
+
+	    background-color: #80b3ff;
+	    width: 30px;
+	    height: 30px;
+		margin-left: 1%;
+		margin-top: 1%;
+	    border-radius: 7.5%;
+
+	    font-family: 'HelveticaNeue-Light';
+	    color: #FFFFFF;
+	    font-size: 1.2em;
+	    padding: 0;
+
+	    -webkit-transition: background-color .1s linear;
+	    -moz-transition: background-color .1s linear;
+	    -o-transition: background-color .1s linear;
+	    -ms-transition: background-color .1s linear;
+	    transition: background-color .1s linear;
+	}
+
+	.logo:hover {
+	    background-color: #66a3ff;
+	}
+	.logo_link {
+		padding: 30%;
+	}
+
+	/* Smallest  ----------- */
+	@media screen and (max-width :1000px) {
+		form {
+			margin-top: 25%;
+		}
+	}
+
+	/* Smallest  ----------- */
+	@media screen and (max-width :500px) {
+		form {
+			margin-top: 50%;
+		}
+	}
+</style>
+
+<p style="display: none" class="logo"><a class="logo_link" href="/">y</a></p>
+<p>How many commodities is the farmer growing?</p>
+<form class="login" action="/cash-flows" method="post">
+<input name="commodities" value="{{ com }}">
+</form>
+
+</form>
+	<table>
+		{% for n in range( 2 ) %}
+		<table>
+			<h4 style="color: black; float:left;">Commodity {{ n+1 }}</h4>
+			<tr>
+				<td style="color: black;">Crop</td>
+				<td>
+					<select>
+						<option>Wheat</option>
+						<option>Potato</option>
+						<option>Onion</option>
+						<option>Tomato</option>
+						<option>Sugarcane</option>
+						<option>Mustard</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td style="color: black;">No. Acres</td>
+				<td>
+					<select>
+						<option>0.25</option>
+						<option>0.5</option>
+						<option>0.75</option>
+						<option>1</option>
+						<option>1.25</option>
+						<option>1.5</option>
+						<option>1.75</option>
+						<option>2</option>
+						<option>2.25</option>
+						<option>2.5</option>
+					</select>
+				<td>
+			</tr>
+			<tr>
+				<td style="color: black; font-size: 1em;">Sowing Date</td>
+				<td><input type="date" name="bday"></td>
+			</tr>
+		</table><br><br>
+		{% endfor %}
+	</table>
+    <input type=submit value=Submit class="button" style="color: #fff; font-family: 'HelveticaNeue-Light'; width: 200px; height: 60px; padding: .5em; font-size: 20px;"><br>
+</form>
+</body>
+</html>

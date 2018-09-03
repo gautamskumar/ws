@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Sensor Data</title>
+    <link rel='shortcut icon' href='../static/img/yobi.ico' type='image/x-icon'/ >
+    <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css">
+    <!-- <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/results.css">
+
+</head>
+
+<body>
+
+<table border='1'>
+    <tr>
+    <th>Last Update</th>
+    <th>Air Temp</th>
+    <th>Dew Point</th>
+    <th>Wind speed</th>
+    <th>Rainfall</th>
+    <th>Air Pressure (MSLP)</th>
+    </tr>
+
+    {% for sensor_data in sensors %}
+        {% if sensor_data %}
+            <tr>
+                <td>{{ sensor_data['ts'] }}</td>
+                <td>{{ sensor_data['t'] }}</td> 
+                <td>{{ sensor_data['dew'] }}</td>
+                <td>{{ sensor_data['ws'] }}</td>
+                <td>{{ sensor_data['r'] }}</td>
+                <td>{{ sensor_data['slp'] }}</td>   
+            </tr>
+            <meta http-equiv="refresh" content="60; URL=/imd-results/{{ sensor_data['name'] }}">
+        {% endif %}
+    {% endfor %}
+
+</table>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="hi" xml:lang="hi">
+
+<head>
+	<title>Alert Dashboard</title>
+	<link rel='shortcut icon' href='../static/img/yobi.ico' type='image/x-icon'/ >
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+</head>
+
+<body style="text-align:center">
+<style type="text/css">
+tr {
+	float: 10em;
+}
+
+</style>
+
+<div>
+	<table class="table table-striped" style="margin-left: auto; margin-right: auto; margin-top: 10%; width: 30%;">
+		<tr>
+			<th>SMS Alert</th>
+		</tr>
+		<form action="/send_sms" method="post">
+			<tr style="display:none;">
+				<th>ID</th>
+				<td><input name="sensor_id" class="form-control" value="{{ id }}" readonly></td>
+			</tr>
+			<tr>
+				<td><input class="form-control" name="nos" value="{{ nos }}"></td>
+			</tr>
+			<tr>
+				<td><input class="form-control" name="time" type="time" value="09:15" readonly></td>
+			</tr>
+			<tr>
+				<td><textarea rows="6" name="msg" lang="hi" class="form-control">{{ msg }}</textarea></td>
+			</tr>
+			<td><input type="submit" name="btn" class="btn btn-default"></td>
+		</form>
+	</table>
+</div>
+</body>
+
+</html>

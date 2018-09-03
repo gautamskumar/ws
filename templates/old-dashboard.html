@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Latest compiled and minified CSS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<link rel='shortcut icon' href='../static/img/yobi.ico' type='image/x-icon'/>
+	<script src="../static/js/jquery.min.js"></script>
+	<script>
+		var hrs = 0;
+	</script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" type="text/css" href="../static/css/dashboard.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/grid.css">
+	<link href="static/css/app.css" rel="stylesheet">
+
+	<title>Dashboard</title>
+</head>
+<body>
+
+	<!-- <nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">
+	        <img alt="Brand" src="../static/pics/logo.png">
+	      </a>
+	    </div>
+	    <p class="navbar-text navbar-right" style="margin-right:3%">Signed in as <a href="#" class="navbar-link">Mark Otto</a></p>
+	  </div>
+	</nav> -->
+	<div id="dash" class="grid_2" style="margin-right:0">
+		<center><img width="50px" src="../static/img/logo.png"></center>
+		<ul>
+		  <li class="subject">SETTINGS</li>
+		  <li><a href="/id-dash">Network Settings</a></li>
+		  <li><a href="/sms-manager">SMS Manager (BETA)</a></li>
+		  <li><a href="/changePass">Change Password</a></li>
+		  <li><a href="/logout">Logout</a></li>
+		</ul>
+		<ul id="username">
+			<li>Welcome, {{ name }}.</li>
+		</ul>
+	</div>
+
+    <div id="map" class="grid_10 omega"></div>
+    <script type="text/javascript">
+
+    villages = []
+
+	{% for i in range(uploads|length) %}
+	    villages.push({	"id":"{{ uploads[i]['_id'] }}",
+	    				"ts":"{{ uploads[i]['ts'] }}",
+	    				"t" :"{{ uploads[i]['t'] }}",
+	    				"h" :"{{ uploads[i]['h'] }}",
+	    				"r" :"{{ uploads[i]['r']}}",
+	    				"w" :"{{ uploads[i]['w'] }}",
+	    				"lt":{{ uploads[i]['lt'] }},
+	    				"ln":{{ uploads[i]['ln'] }},
+	    				"name":"{{ uploads[i]['name'] }}"})
+	{% endfor %}
+
+    </script>
+    <script src='static/js/app.js'></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAI6Rl5MO_htYUgemf5MUdFHfULFlKc-0M&callback=initMap">
+    </script>
+
+</body>
+</html>

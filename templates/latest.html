@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Python Flask Bucket List App</title>
+    <link rel='shortcut icon' href='../static/img/yobi.ico' type='image/x-icon'/ >
+    <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css">
+
+    <!-- <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap-theme.min.css">
+
+    <link rel="stylesheet" type="text/css" href="../static/css/results.css">
+
+</head>
+
+<body>
+
+<table border='1'>
+    <tr>
+    <th>Last Update</th>
+    <th>Sensor ID</th>
+    <th>Air Temp1</th>
+    <th>Air Temp2</th>
+    <th>Humidity</th>
+    <th>Wind speed</th>
+    <th>Rainfall</th>
+    <th>Air Pressure</th>
+    <th>Solar Radiation</th>
+    <th>Latitude</th>
+    <th>Longitude</th>
+    </tr>
+
+    {% for obj in jsonObjs %}
+        {% if obj %}
+            <tr>
+                <td>{{ obj['ts'] }}</td>
+                <td>{{ obj['id'] }}</td>
+                <td>{{ obj['t1'] }}</td> 
+                <td>{{ obj['t2'] }}</td> 
+                <td>{{ obj['h'] }}</td>
+                <td>{{ obj['w'] }}</td>
+                <td>{{ obj['r'] }}</td>
+                <td>{{ obj['p'] }}</td>
+                <td>{{ obj['s'] }}</td>
+                <td>{{ obj['lt'] }}</td>
+                <td>{{ obj['ln'] }}</td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+
+</table>
+</body>
+
+</html>

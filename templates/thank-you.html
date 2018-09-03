@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Registered!</title>
+    <link rel='shortcut icon' href='../static/img/yobi.ico' type='image/x-icon'/ >
+    <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css">
+    <!-- <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/results.css">
+
+</head>
+
+<body>
+<style type="text/css">
+body {
+	text-align: center;
+	background-color: #6AA3FF;
+	color: #FFFFFF;
+}
+
+img {
+	margin: auto;
+	margin-top: 50px;
+}
+
+p {
+	font-family: 'HelveticaNeue-Light';
+	font-size: 8.5em;
+	margin-top: 140px;
+}
+</style>
+{% if state == "Delhi" or state == "Haryana" or state == "Uttrakhand" or state == "Uttar Pradesh" or state == "Rajasthan" or state == "Madhya Pradesh" or state == "Chhattisgarh" or state == "Bihar" or state == "Jharkhand" %}
+	<p lang="hi">+{{ ph }} पंजीकरण के लिए धन्यवाद.</p>
+{% elif state == "Arunachal Pradesh" or state == "Nagaland" or state == "Mizoram" or state == "Tripura" or state == "Meghalaya" or state == "Manipur" %}
+	<p lang="en">Thank you for registering +{{ ph }}.</p>
+{% elif state == "Maharashtra" %}
+	<p lang="mr">+{{ ph }} नोंदणी केल्याबद्दल धन्यवाद.</p>
+{% elif state == "Gujarat" %}
+	<p lang="gu">+{{ ph }} નોંધણી માટે આભાર.</p>
+{% elif state == "Punjab" %}
+	<p lang="pa">+{{ ph }} ਰਜਿਸਟਰ ਕਰਨ ਲਈ ਤੁਹਾਡਾ ਧੰਨਵਾਦ.</p>
+{% elif state == "West Bengal" %}
+	<p lang="bn">+{{ ph }} রেজিস্টার করার জন্য আপনাকে ধন্যবাদ.</p>
+{% elif state == "Karnataka" %}
+	<p lang="kn">+{{ ph }} ರಿಜಿಸ್ಟರ್ ಧನ್ಯವಾದಗಳು.</p>
+{% elif state == "Tamil Nadu" %}
+	<p lang="ta">+{{ ph }} பதிவேட்டில் நன்றி.</p>
+{% elif state == "Andhra Pradesh" %}
+	<p lang="te">+{{ ph }} రిజిస్టర్ ధన్యవాదాలు.</p>
+{% elif state == "Kerala" %}
+	<p lang="ml">+{{ ph }} രജിസ്റ്ററിൽ നന്ദി.</p>
+{% endif %}
+
+<!-- <img src="https://media.giphy.com/media/87I8pKmdcAKw8/giphy.gif"> -->
+
+</body>
+
+</html>

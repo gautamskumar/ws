@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Latest compiled and minified CSS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<link rel='shortcut icon' href='../static/img/yobi.ico' type='image/x-icon'/>
+	<script src="../static/js/jquery.min.js"></script>
+	<script>
+		var hrs = 0;
+	</script>
+
+	<!-- Optional theme -->
+
+	<!-- Latest compiled and minified JavaScript -->
+
+	<link rel="stylesheet" type="text/css" href="../static/css/dashboard.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/grid.css">
+	<link href="static/css/app.css" rel="stylesheet">
+
+	<title>Dashboard</title>
+</head>
+<body>
+    <div id="map" class="grid_10 omega"></div>
+    <script type="text/javascript">
+    villages = []
+        {% for i in range(idsObjs|length) %}
+            villages.push({"id":{{ idsObjs[i]['_id'] }},"lt":{{ idsObjs[i]['lt']}},"ln":{{ idsObjs[i]['ln'] }},
+            "val":{{ idsObjs[i]['val']}},"hts":"{{ idsObjs[i]['hts']}}","rts":"{{ idsObjs[i]['rts']}}","t":{{ idsObjs[i]['t']}},"name":"{{ idsObjs[i]['name'] }}"})
+        {% endfor %}
+        console.log(villages);
+        var days  = {{ days }}
+        var start = {{ start }}
+        var end   = {{ end }}
+    </script>
+    <script src='static/js/async-app.js'></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAI6Rl5MO_htYUgemf5MUdFHfULFlKc-0M&callback=initMap">
+    </script>
+
+</body>
+</html>

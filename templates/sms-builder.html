@@ -1,0 +1,378 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>SMS Builder</title>
+	<link rel='shortcut icon' href='../static/img/yobi.ico' type='image/x-icon'/ >
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<link href="../static/css/grid.css" rel="stylesheet">
+
+</head>
+<body style="text-align:center;">
+	<style type="text/css">
+		p { margin:0 }
+		.dropdown-menu ul {
+			list-style-type: none;
+		}
+	</style>
+	<script type="text/javascript">
+	//Temp: 14 char
+	//Hum: 13 char
+	//Rain: 11 char
+
+	//Today: 2 Char
+	//Yesterday 2 Char
+
+
+	$(document).ready(function(){
+	    var $formElem 		= $(".formElem");
+
+	    function calculateCost(){
+	    	var locationName 	= $(".locationName").val().length;
+	    	var total 			= 0;
+	    	var cost 			= locationName;
+	    	var dynCost 		= 0;
+	    	var language 		= $("#language option:selected").val();
+		    var temp   			= $('#temp').is(':checked');
+		    var rain   			= $('#rain').is(":checked");
+		    var hum    			= $('#hum').is(":checked");
+		    var yest    		= $('#yest').is(":checked");
+		    var tod    			= $('#tod').is(":checked");
+		    var tom 	   		= $('#tom').is(":checked");
+		    $('#location').text($(".locationName").val());
+
+		    if (language == "Hindi") {
+		    	var Hindi = true;
+		    }
+		    else {
+		    	var Hindi = false;
+		    }
+
+		    values = {
+		    	"yest_day" : $('#yest #day'),
+		    	"yest_temp": $('#yest #temp'),
+		    	"yest_hum" : $('#yest #hum'),
+		    	"yest_rain": $('#yest #rain'),
+			    "tod_day"  : $('#tod #day'),
+			    "tod_temp" : $('#tod #temp'),
+			    "tod_hum"  : $('#tod #hum'),
+			    "tod_rain" : $('#tod #rain'),
+			    "tom_day"  : $('#tom #day'),
+			    "tom_temp" : $('#tom #temp'),
+			    "tom_hum"  : $('#tom #hum'),
+			    "tom_rain" : $('#tom #rain'),
+		    }
+
+		    Object.keys(values).forEach(function(key) {
+		    	values[key].text("");
+			});
+		    if (yest) {
+		    	total += 1;
+		    	if (Hindi) {
+		    		var txt = "कल";
+			    	cost   += txt.length+1; // for Yesterday in SMS
+			    	values["yest_day"].text(txt);
+			    }
+			    else {
+			    	var txt = "YESTERDAY";
+			    	cost   += txt.length+1; // for Yesterday in SMS
+			    	values["yest_day"].text(txt);
+			    }
+		    
+			    if (temp) {
+		    		cost += 4;
+			    	if (Hindi) {
+			    		var txt = "गर्मी: 15.2C/8.1C";
+				    	cost   += txt.length+1; // for Yesterday in SMS
+				    	values["yest_temp"].text(txt);
+				    }
+				    else {
+				    	var txt = "Temp: 15.2C/8.1C";
+				    	cost   += txt.length+1; // for Yesterday in SMS
+				    	values["yest_temp"].text(txt);
+				    }
+		    	}
+		    	if (hum) {
+		    		cost += 4;
+			    	if (Hindi) {
+			    		var txt = "नमी: 72.2%/16.4%";
+				    	cost   += txt.length+1; // for Yesterday in SMS
+				    	values["yest_hum"].text(txt);
+				    }
+				    else {
+				    	var txt = "Hum: 72.2%/16.4%";
+				    	cost   += txt.length+1; // for Yesterday in SMS
+				    	values["yest_hum"].text(txt);
+				    }
+		    	}
+		    	if (rain) {
+		    		cost += 1;
+			    	if (Hindi) {
+			    		var txt = "बारिश: 0.5mm";
+				    	cost   += txt.length+1; // for Yesterday in SMS
+				    	values["yest_rain"].text(txt);
+				    }
+				    else {
+				    	var txt = "Rain: 0.5mm";
+				    	cost   += txt.length+1; // for Yesterday in SMS
+				    	values["yest_rain"].text(txt);
+				    }
+		    	}
+		    }
+
+		    if (tod) {
+		    	total += 1;
+		    	if (Hindi) {
+		    		var txt = "आज";
+			    	cost   += txt.length+1; // for Yesterday in SMS
+			    	values["tod_day"].text(txt);
+			    }
+			    else {
+			    	var txt = "TODAY";
+			    	cost   += txt.length+1; // for Yesterday in SMS
+			    	values["tod_day"].text(txt);
+			    }
+		    
+			    if (temp) {
+			    	if (Hindi) {
+			    		var txt = "गर्मी: 15C/8C";
+				    	cost   += txt.length+1; // for Yesterday in SMS
+				    	values["tod_temp"].text(txt);
+				    }
+				    else {
+				    	var txt = "Temp: 15C/8C";
+				    	cost   += txt.length+1; // for Yesterday in SMS
+				    	values["tod_temp"].text(txt);
+				    }
+		    	}
+		    	if (hum) {
+			    	if (Hindi) {
+			    		var txt = "नमी: 72%/16%";
+				    	cost   += txt.length+1; // for Yesterday in SMS
+				    	values["tod_hum"].text(txt);
+				    }
+				    else {
+				    	var txt = "Hum: 72%/16%";
+				    	cost   += txt.length+1; // for Yesterday in SMS
+				    	values["tod_hum"].text(txt);
+				    }
+		    	}
+		    	if (rain) {
+			    	if (Hindi) {
+			    		var txt = "बारिश: 2mm";
+				    	cost   += txt.length+1; // for Yesterday in SMS
+				    	values["tod_rain"].text(txt);
+				    }
+				    else {
+				    	var txt = "Rain: 2mm";
+				    	cost   += txt.length+1; // for Yesterday in SMS
+				    	values["tod_rain"].text(txt);
+				    }
+		    	}
+		    }
+
+		    if (tom) {
+		    	total += 1;
+		    	if (Hindi) {
+		    		var txt = "कल";
+			    	cost   += txt.length; // for Yesterday in SMS
+			    	values["tom_day"].text(txt);
+			    }
+			    else {
+			    	var txt = "TOMORROW";
+			    	cost   += txt.length; // for Yesterday in SMS
+			    	values["tom_day"].text(txt);
+			    }
+		    
+			    if (temp) {
+			    	if (Hindi) {
+			    		var txt = "गर्मी: 15C/8C";
+				    	cost   += txt.length; // for Yesterday in SMS
+				    	values["tom_temp"].text(txt);
+				    }
+				    else {
+				    	var txt = "Temp: 15C/8C";
+				    	cost   += txt.length; // for Yesterday in SMS
+				    	values["tom_temp"].text(txt);
+				    }
+		    	}
+		    	if (hum) {
+			    	if (Hindi) {
+			    		var txt = "नमी: 72%/16%";
+				    	cost   += txt.length; // for Yesterday in SMS
+				    	values["tom_hum"].text(txt);
+				    }
+				    else {
+				    	var txt = "Hum: 72%/16%";
+				    	cost   += txt.length; // for Yesterday in SMS
+				    	values["tom_hum"].text(txt);
+				    }
+		    	}
+		    	if (rain) {
+			    	if (Hindi) {
+			    		var txt = "बारिश: 0mm";
+				    	cost   += txt.length; // for Yesterday in SMS
+				    	values["tom_rain"].text(txt);
+				    }
+				    else {
+				    	var txt = "Rain: 0mm";
+				    	cost   += txt.length; // for Yesterday in SMS
+				    	values["tom_rain"].text(txt);
+				    }
+		    	}
+		    }
+
+		    if (tom && yest && Hindi) {
+		    	txt    = "बिता कल आने वाला";
+		    	cost  += txt.length;
+		    	values["yest_day"].text("बिता कल");
+		    	values["tom_day"].text("आने वाला कल");
+		    }
+
+		    if (language == "Hindi") {
+		    	dynCost = Math.ceil(cost/70)*.5;
+		    }
+		   	if (language == "English") {
+		   		dynCost = Math.ceil(cost/160)*.5;
+		   	}
+		    $('#cost').val('₹'.concat(dynCost.toFixed(2)));
+		    console.log(cost);
+	    }
+
+	    calculateCost();
+
+	    $formElem.change(function(){
+	        //var countCheckedCheckboxes = $inputs.filter(':checked').length;
+	        calculateCost();
+	    });
+	});
+	</script>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <ul class="nav navbar-nav">
+	      <li><a href="/dashboard">Dashboard</a></li>
+	      <li><a href="/id-dash">Network Settings</a></li>
+	      <li><a href="/sms-manager">SMS Manager</a></li>
+	      <li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">SMS Builder</a>
+			<div class="dropdown-menu">
+				<ul>
+					<li><a class="dropdown-item" href="/sms-builder/{{ sensors['id'] }}">Daily weather</a></li>
+					<li><a class="dropdown-item" href="/sms-sowing/{{ sensors['id'] }}">Sowing</a></li>
+					<li><a class="dropdown-item" href="/sms-irrigation/{{ sensors['id'] }}">Irrigation</a></li>
+					<li><a class="dropdown-item" href="/sms-inputs/{{ sensors['id'] }}">Inputs</a></li>
+					<li><a class="dropdown-item" href="/sms-harvest/{{ sensors['id'] }}">Harvest</a></li>
+				</ul>
+			</div>
+		  </li>
+	      <li><a href="/logout">Logout</a></li>
+	    </ul>
+	  </div>
+	</nav>
+	<form method="post" action="/sms-builder/{{ sensors['id'] }}" class="grid_6 alpha" style="display:in-line;">
+		<table style="width:375px; margin: 25px; display: inline" class="table table-striped">
+			<tr>
+				<th>Station Name</th>
+				<td><input name="name" class="form-control" value="{{ sensors['name'] }}" readonly></td>
+			</tr>
+			<tr style="display:none;">
+				<th>ID</th>
+				<td><input name="sensor_id" class="form-control" value="{{ sensors['id'] }}" readonly></td>
+			</tr>
+			<tr>
+				<th>SMS Language</th>
+				<td id="language">
+					<select class="formElem form-control" name="language">
+						<option selected></option>
+						<option value="Hindi" {% if contacts['language'] == "Hindi" %} selected {% endif %}>हिंदी</option>
+						<option value="English" {% if contacts['language'] == "English" %} selected {% endif %}>English</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>SMS Location Name</th>
+				<td><input class="formElem locationName form-control" name="username" value="{{ contacts['username'] or '' }}"></td>
+			</tr>
+			<tr>
+				<th>SMS Inputs</th>
+				<td id="inputs">
+					<input id="temp" class="formElem" type="checkbox" name="temp" value="1" {% if contacts['inputs']['temp'] == 1 %} checked {% endif %}>Temperature
+					<input id="rain" class="formElem" type="checkbox" name="rain" value="1" {% if contacts['inputs']['rain'] == 1 %} checked {% endif %}>Rainfall
+					<input id="hum" class="formElem" type="checkbox" name="hum"  value="1" {% if contacts['inputs']['hum']  == 1 %} checked {% endif %}>Humidity
+				</td>
+			</tr>
+			<tr>
+				<th>Days Inputs</th>
+				<td id="inputs">
+					<input id="yest" class="formElem" type="checkbox" name="yest" value="1" {% if contacts['days']['yest'] == 1 %} checked {% endif %}>Yesterday
+					<input id="tod" class="formElem" type="checkbox" name="tod" value="1" {% if contacts['days']['tom'] == 1 %} checked {% endif %}>Today
+					<input id="tom" class="formElem" type="checkbox" name="tom"  value="1" {% if contacts['days']['tom']  == 1 %} checked {% endif %}>Tomorrow
+				</td>
+			</tr>
+			<tr>
+				<th>In DND</th>
+				<td style="float: left;">
+				{% for c in contacts["inDND"] %}
+					{{ c or 'None' }}
+				{% endfor %}
+				</td>
+			</tr>
+			<tr>
+				<th>Numbers</br>(One number</br>per line)</th>
+				<td><textarea name="numbers" class="form-control" rows="7">{% for c in contacts["numbers"] %}{{ c or ''}}
+{% endfor %}</textarea> </td>
+			</tr>
+			<tr>
+				<th>Sending Time</th>
+				<td><input class="form-control" name="time" type="time" value="09:15" readonly></td>
+			</tr>
+			<tr>
+				<th>Cost per message</th>
+				<td><input id="cost" name="cost" class="form-control" value="" readonly></td>
+			</tr>
+			<tr>
+				<th>Credits</th>
+				<td style="float: left;">&#8377;{{ '%0.2f' % (contacts["credits"]/2) or '0' }}</td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" name="btn" class="btn btn-default"></td>
+			</tr>
+		</table>
+	</form>			
+	<div style="text-align:left; background-color: #f0f0f0; padding-left: 20%; padding-top: 1%; height: 620px;" class="grid_6 omega">
+		<h3 style="margin-bottom: 2em;">SMS Visualizer</h2>
+		<div id="message">
+			<p id="location"></p>
+			<div id="yest">
+				<p id="day"></p>
+				<p id="temp"></p>
+				<p id="hum"></p>
+				<p id="rain"></p>
+			</div>
+			<br>
+			<div id="tod">
+				<p id="day"></p>
+				<p id="temp"></p>
+				<p id="hum"></p>
+				<p id="rain"></p>
+			</div>
+			<br>
+			<div id="tom">
+				<p id="day"></p>
+				<p id="temp"></p>
+				<p id="hum"></p>
+				<p id="rain"></p>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

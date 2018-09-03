@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Yobi | Password Change</title>
+	<link rel='shortcut icon' href='../../../static/img/yobi.ico' type='image/x-icon'/>
+</head>
+<body>
+<style type="text/css">
+	body {
+		background-color: #f0f0f0;
+		color: #FFFFFF;
+		font-family: 'HelveticaNeue-Light';
+		text-align: center;
+	}
+	form {
+		margin: auto;
+		margin-top: 16.5%;
+	}
+	input {
+		font-size: 24px;
+		border: none;
+		background-color: #f0f0f0;
+		margin-bottom: 15px;
+		width: 350px;
+		font-family: 'HelveticaNeue-Light';
+		padding-top: 5px;
+		padding-bottom: 5px;
+		padding-left: 5px;
+		padding-right: 5px;
+		border-bottom: solid #DADADA 1px;
+	}
+	.changepassbtn {
+		margin-top: 20px;
+		background-color: #80b3ff;
+		padding-top: 1.0em;
+		padding-bottom: 1.0em;
+		padding-right: 2px;
+		padding-left: 2px;
+		width: 280px;
+		border-radius: 3px;
+		margin-left: auto;
+		margin-right: auto;
+
+		-webkit-transition: background-color .1s linear;
+	    -moz-transition: background-color .1s linear;
+	    -o-transition: background-color .1s linear;
+	    -ms-transition: background-color .1s linear;
+	    transition: background-color .1s linear;
+	}
+	.changepassbtn:hover {
+		background-color: #66a3ff;
+	}
+
+	a {
+		text-decoration: none;
+		color: #FFFFFF;
+		padding-left: 45%;
+		padding-right: 45%;
+		padding-top: 1.5em;
+		padding-bottom: 1.5em;
+	}
+
+	.logo {
+
+	    background-color: #80b3ff;
+	    width: 30px;
+	    height: 30px;
+		margin-left: 1%;
+		margin-top: 1%;
+	    border-radius: 7.5%;
+
+	    font-family: 'HelveticaNeue-Light';
+	    color: #FFFFFF;
+	    font-size: 1.2em;
+	    padding: 0;
+
+	    -webkit-transition: background-color .1s linear;
+	    -moz-transition: background-color .1s linear;
+	    -o-transition: background-color .1s linear;
+	    -ms-transition: background-color .1s linear;
+	    transition: background-color .1s linear;
+	}
+
+	.logo:hover {
+	    background-color: #66a3ff;
+	}
+	.logo_link {
+		padding: 30%;
+	}
+
+	/* Smallest  ----------- */
+	@media screen and (max-width :1000px) {
+		form {
+			margin-top: 25%;
+		}
+	}
+
+	/* Smallest  ----------- */
+	@media screen and (max-width :500px) {
+		form {
+			margin-top: 50%;
+		}
+	}
+</style>
+
+<p style="display: none" class="logo"><a class="logo_link" href="/">y</a></p>
+
+<form class="login" action="" method="post">
+	<input type=text name=username value="{{username}}" readonly><br>
+	<input type=password placeholder="New Password" name="password"><br>
+	<input type=password placeholder="Confirm Password" name="confirmpass"><br>
+    <input type=submit value="Change Password" class="changepassbtn" style="color: #fff; font-family: 'HelveticaNeue-Light';"><br>
+</form>
+
+{% if comment %}
+	<p style="color: #a0a0a0;">{{ comment }}</p>
+{% endif %}
+
+</body>
+</html>

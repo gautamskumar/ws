@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Analytics</title>
+    <link rel='shortcut icon' href='../static/img/yobi.ico' type='image/x-icon'/ >
+    <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css">
+    <!-- <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/results.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/grid.css">
+
+    <style>
+        body {
+            background-color: #F0F0F0;
+            text-align: center;
+        }
+
+        .info {
+            float: left;
+            background-color: #F0F0F0;
+            box-shadow: 0px 0px 5px 0px #A0A0A0;
+        }
+
+        table {
+            background-color: #FFFFFF;
+        }
+
+        td p, input {
+            font-size: 12px;
+        }
+
+        input {
+            text-align: center;
+        }
+
+        .container {
+            padding: 0em;
+            margin: 0em;
+        }
+
+        .addtl td {
+            font-size: 12px;
+        }
+        .button {
+            margin-top: 20px;
+            background-color: #80b3ff;
+            padding-top: 1em;
+            padding-bottom: 1em;
+            padding-right: 5px;
+            padding-left: 5px;
+            width: 112.5px;
+            margin-left: auto;
+            margin-right: auto;
+            border: none;
+            color: #FFFFFF;
+
+            -webkit-transition: background-color .1s linear;
+            -moz-transition: background-color .1s linear;
+            -o-transition: background-color .1s linear;
+            -ms-transition: background-color .1s linear;
+            transition: background-color .1s linear;
+        }
+        .button:hover {
+            background-color: #66a3ff;
+        }
+
+        #notification {
+            position:fixed;
+            top:0px; /* Set to 0 or wherever */
+            width:100%; /* set to 100% if space is available */
+            z-index:105;
+            text-align:center;
+            font-size:16px;
+            color:white;
+            font-family: 'HelveticaNeue-Medium';
+            background-color:#ffb3b3;
+            padding:1.25em;
+        }
+        #notification span.dismiss {
+            padding:0 5px;
+            cursor:pointer;
+            float:right;
+            margin-right:10px;
+        }
+        #notification a {
+            color:white;
+            text-decoration:none;
+            font-family: 'HelveticaNeue-Light';
+            font-weight:bold
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript">
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+    </script>
+
+    <div class="container">
+        <div id="notification" style="display: none;">
+          <span class="dismiss"><a title="dismiss this notification">X</a></span>
+        </div>
+
+        <div class="grid_4 info" style="float: left; margin-top: 1%; margin-left: 1%; background-color: #FFFFFF; padding-bottom: 1em;">
+            <form action="../../id-dash" method="post">
+                <table border='1' style="width: 100%">
+                    <tr class="addtl" style="display:none;">
+                        <td>ID:</td>
+                        <td><input class="form-control" type="text" name="id" value={{ analytics['id'] }} readonly></td>
+                    </tr>
+                    <tr>
+                        <th colspan="2"><input class="form-control" type="text" name="name" value="{{ analytics['name'] }}"></th>
+                    </tr>
+                    <tr id="a">
+                        <td class="pct" colspan="2" style="background-color: #b3e6b3;">{{ analytics["pct"] }}%</td>
+                    </tr>
+                    <tr class="addtl">
+                        <td>Last update:</td>
+                        <td>{{ analytics["last_update"] }}</script></td>
+                    </tr>
+                    <tr class="addtl">
+                        <td>Days in operation:</td>
+                        <td>{{ analytics["infield_days"] }}</script></td>
+                    </tr>
+                    <tr class="addtl">
+                        <td>Uptime:</td>
+                        <td>{{ analytics["uptime"] }}%</td>
+                    </tr>
+                    <tr class="addtl">
+                        <td>Attempted uploads:</td>
+                        <td>{{ analytics["attempts"] }}</td>
+                    </tr>
+                    <tr class="addtl">
+                        <td>Uploads:</td>
+                        <td>{{ analytics["uploads"] }}</td>
+                    </tr>
+                    <tr class="addtl">
+                        <td>Misses:</td>
+                        <td>
+                            {{ analytics["misses"] }}
+                        </td>
+                    </tr>
+                    <tr class="addtl">
+                        <td>Hangs:</td>
+                        <td>
+                            {{ analytics["hangs"] }}
+                        </td>
+                    </tr>
+                    <tr class="addtl">
+                        <td>Lat:</td>
+                        <td><input class="form-control" type="text" name="lt" value="{{ analytics['lt'] }}"></td>
+                    </tr>
+                    <tr class="addtl">
+                        <td>Lon:</td>
+                        <td><input class="form-control" type="text" name="ln" value="{{ analytics['ln'] }}"></td>
+                    </tr>
+                    <tr class="addtl">
+                        <td>Mobile No.:</td>
+                        <td><input class="form-control" type="text" name="ph" value="{{ analytics['mob_no'] }}"></td>
+                    </tr>
+                    <tr class="addtl">
+                        <td>Carrier:</td>
+                        <td><select class="form-control" type="" name="carrier">
+                                <option {% if not analytics['carrier'] %} selected disabled {% endif %}></option>
+                                <option {% if analytics['carrier'] == "Airtel" %} selected {% endif %}>Airtel</option>
+                                <option {% if analytics['carrier'] == "Aircel" %} selected {% endif %}>Aircel</option>
+                                <option {% if analytics['carrier'] == "BSNL" %} selected {% endif %}>BSNL</option>
+                                <option {% if analytics['carrier'] == "Idea" %} selected {% endif %}>Idea</option>
+                                <option {% if analytics['carrier'] == "Reliance" %} selected {% endif %}>Reliance</option>
+                                <option {% if analytics['carrier'] == "Tata Docomo" %} selected {% endif %}>Tata Docomo</option>
+                                <option {% if analytics['carrier'] == "Vodafone" %} selected {% endif %}>Vodafone</option>
+                            </select></td>
+                    </tr>
+                    <tr class="addtl">
+                        <td>Upload interval:</td>
+                        <td><select class="form-control" type="" name="freq">
+                                <option {% if not analytics['freq'] %} selected disabled {% endif %}></option>
+                                <option {% if analytics['freq'] == "1" %} selected {% endif %} value=1>1 minute</option>
+                                <option {% if analytics['freq'] == "4" %} selected {% endif %} value=4>4 minutes</option>
+                                <option {% if analytics['freq'] == "5" %} selected {% endif %} value=5>5 minutes</option>
+                                <option {% if analytics['freq'] == "10" %} selected {% endif %} value=10>10 minutes</option>
+                            </select></td>
+                    </tr>
+                    <tr class="addtl">
+                        <td>Installation date:</td>
+                        <td><input class="form-control" type="date" name="date" value="{{ analytics['install_date'] }}"></td>
+                    </tr>
+                    <script type="text/javascript">
+                        colorChange(0)
+                    </script>
+                    <tr>
+                        <td colspan="2"><input type="submit" name="btn" class="button"></td>
+                    </tr>
+                </table>
+            </form>
+            <a href="../ws/{{ analytics['id'] }}" style="float:center;"><img src="../static/img/download.svg"</a>
+        </div>
+        <div class="grid_7 omega">
+            <div class="grid_12 omega">
+                <iframe style="margin-top: 10%" width="165%" height="600" frameborder="0" scrolling="no" src="https://plot.ly/~bharat5005/2.embed"></iframe>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+
+<footer>
+    <!-- D3.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript">
+        if ({{ situation }} == 1) {
+            $("#notification").fadeIn("slow").append('Battery power low. Check if solar panel is: 1. Clean, 2. Facing south, 3. Unobstructed by e.g. trees.');
+        }
+        if ({{ situation }} == 2) {
+            $("#notification").fadeIn("slow").append('Signal strength is variable. Move instrument to more stable GRPS connection.');
+        }
+        if ({{ situation }} == 3) {
+            $("#notification").fadeIn("slow").append('Equipment unresponsive. Try turning instrument on and off. If still unoperational, please write to hello@yobi.tech.');
+        }
+        $(".dismiss").click(function(){
+        $("#notification").fadeOut("slow");
+        });
+    </script>
+    <!-- Plotly.js -->
+    <script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script>
+
+</footer>
+
+</html>

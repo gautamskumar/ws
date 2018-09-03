@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>QC Dashboard</title>
+    <link rel='shortcut icon' href='../static/img/yobi.ico' type='image/x-icon'/ >
+    <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css">
+    <!-- <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/grid.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="../static/css/results.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+</head>
+
+<body onload="setTimeout(function() { document.tests.submit() }, 60*1000)">
+
+<style type="text/css">
+
+body {
+    background-color: #F0F0F0;
+}
+
+table {
+    float: left;
+}
+
+#header {
+    font-family:'HelveticaNeue-Light'; 
+    font-size: 18px; 
+}
+
+.square {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 98%;
+    margin: 1%;
+    background-color: #FFFFFF;
+    padding: 1.5%;
+}
+
+</style>
+
+<script type="text/javascript">
+function colorChange(id) {
+
+    orange_min = 6;
+    red_min = 16;
+    
+    count = 0;
+    var td = document.getElementById(id);
+    var arr = document.getElementsByClassName('ts');
+    for(var i=0; i< arr.length; i++){
+        date = new Date(arr[i].innerHTML);
+    }
+    var d = new Date();
+    var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+    var now = new Date(utc + (3600000*5.5));
+    if ((now-date) > red_min*60*1000) {
+        td.style.background = '#ffb3b3';
+    }
+    else if ((now-date) > orange_min*60*1000) {
+        td.style.background = '#ffe0b3';
+    }
+    else {
+        td.style.background = '#c1f0c1';
+    }
+}
+</script>
+<div class="grid_12 square">
+    <p id="header">testing ({{ n_testing }})</p>
+    {% for t in test %}
+        {% if t %}
+            <table border='0' style="border-collapse: collapse; margin: 2.5px;">
+                <tr>
+                    <th><a href="/results/{{ t['id'] }}">{{ t['id'] }}</a></th>
+                </tr>
+                <tr>
+                    <td class="ts" id="{{ t['id'] }}">{{ t['ts'] }}</td>
+                    <script type="text/javascript">
+                        colorChange("{{ t['id'] }}");
+                    </script>
+                </tr>
+            </table>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<div class="grid_12 square">
+    <p id="header">which are testing?</p>
+    <form name="tests" action="/qc-test" method="post">
+        <input value="{{ in_test }}" name="testing" style="background-color: #FFFFFF">
+        <input type=submit value=Submit class="button" style="color: #fff; font-family: 'HelveticaNeue-Light'; width: 100px; height: 35px; padding: .5em; font-size: 14px;">
+    </form>
+</div>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>
+
+</body>
+
+
+</html>

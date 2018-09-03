@@ -1,0 +1,33 @@
+input {
+	font-size: 24px;
+	border: none;
+	background-color: #f0f0f0;
+	margin-bottom: 15px;
+	width: 350px;
+	font-family: 'HelveticaNeue-Light';
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	border-bottom: solid #DADADA 1px;
+}
+.button {
+	margin-top: 20px;
+	background-color: #80b3ff;
+	padding-top: 1.5em;
+	padding-bottom: 1.5em;
+	padding-right: 5px;
+	padding-left: 5px;
+	width: 350px;
+	margin-left: auto;
+	margin-right: auto;
+
+	-webkit-transition: background-color .1s linear;
+    -moz-transition: background-color .1s linear;
+    -o-transition: background-color .1s linear;
+    -ms-transition: background-color .1s linear;
+    transition: background-color .1s linear;
+}
+.button:hover {
+	background-color: #66a3ff;
+}
