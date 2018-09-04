@@ -628,8 +628,8 @@ def analytics(id):
     else: 
         situation = 0
     
-    rain    = sensor_data.groupby(pd.TimeGrouper('1H')).sum()["r"]
-    df      = sensor_data.groupby(pd.TimeGrouper('1H')).median()
+    rain    = sensor_data.groupby(pd.TimeGrouper('4H')).sum()["r"]
+    df      = sensor_data.groupby(pd.TimeGrouper('4H')).median()
     df["r"] = rain
     
     def checkCol(_DF, _COL, _NAME, _LIST):
