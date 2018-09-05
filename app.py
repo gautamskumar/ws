@@ -287,11 +287,11 @@ def windTest():
     cursor = sensors.find({"id":2001}).sort('ts', pymongo.DESCENDING).limit(sets["size"]+1)
     data   = [x for x in cursor]
     d0     = pd.DataFrame(data)
-    winds  = d0["w"].iloc[0:10]
+    winds  = d0["w"].iloc[0:sets["size"]]
     d0.index = d0["ts"]
     d0["diffs"] = d0.index.to_series().diff() 
-    df          = d0.iloc[1:11]
-    df["diffs"] = (d0.diffs.iloc[1:11]/np.timedelta64(1, 's')).astype(int)*-1
+    df          = d0.iloc[1:sets["size"]+1]
+    df["diffs"] = (d0.diffs.iloc[1:sets["size"]+1]/np.timedelta64(1, 's')).astype(int)*-1
     df["threshold"] = list(winds)
     df["_id"] = df["_id"].astype('string')
     data = [dict((k, _maybe_box_datetimelike(v)) for k, v in zip(df.columns, row) if v != None and v == v) for row in df.values]
